@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDoList</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+
+    <style>
+        body{
+            justify-content: center;
+            display: flex;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .main{
+            width: 300px;
+            padding: 15px;
+            background-color: rgb(196, 241, 255);
+        }
+
+        h1{
+            text-align: center;
+            margin: 10px;
+        }
+
+        input[type=text]
+        {
+            width : 90%;
+            padding: 10px;
+            font-size: 16px;
+            margin-left: 8px;
+            border-radius: 3px;
+            border: none;
+            outline: none;
+        }
+
+        .search{
+            position: relative;
+        }
+
+        .search span{
+            position: absolute;
+            top: -10px;
+            right: -4px;
+            background-color: rgb(82, 186, 212);
+            padding: 20px;
+            display: flex;
+            border-radius: 100%;
+            cursor: pointer;
+        }
+
+        ul{
+            padding: 2px;
+            list-style: none;
+        }
+
+        ul li{
+            background: #fff;
+            margin: 5px;
+            padding: 10px;
+            border-right: 4px solid;
+            border-left: 4px solid;
+        }
+
+        ul li i{
+            padding: 4px;
+            float: right;
+            cursor: pointer;
+        }
+
+        p{
+            color:blueviolet;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="main" ng-app="myapp" ng-controller="myctrl">
+        <h1>Todo List App</h1>
+        <div class="search">
+            <input type="text" placeholder="Add Todo" ng-model="addme">
+            <span ng-click="addItem()"><i class="fas fa-plus"></i></span>
+        </div>
+
+        <ul>
+            <li ng-repeat="x in products">{{x}} <i ng-click="removeItem($index)" class="fas fa-trash-alt"></i></li>
+        </ul>
+        <p>{{errortext}}</p>
+    </div>
+
+    <script type="text/javascript">
+        var app = angular.module("myapp",[]);
+        app.controller("myctrl",function($scope){
+          $scope.products = ["Mini Project","Reading"];
+          $scope.addItem = function(){
+            $scope.errortext = "";
+            if(!$scope.addme) {return;}
+            if($scope.products.indexOf($scope.addme) == -1){
+                $scope.products.push($scope.addme);
+            }
+            else{
+                $scope.errortext = "This is already in the Todo list";
+            }
+          }
+          $scope.removeItem = function(x){
+            $scope.products.splice(x,1);
+          }
+        });
+
+    </script>
+
+</body>
+</html>
